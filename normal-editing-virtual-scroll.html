@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>EJ2 Grid</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Typescript Grid Control">
+    <meta name="author" content="Syncfusion">
+
+    <link href="https://cdn.syncfusion.com/ej2/24.2.3/material.css" rel="stylesheet">
+    <script src="ej2.min.js"></script>
+    <script src ="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script src="data.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+ 
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                <td>
+                    <div>Frozen Rows </div>
+                </td>
+                <td>
+                    <div>
+                        <input id="rows" type="text">
+                    </div>
+                </td>
+                <td>
+                    <div>Frozen Columns </div>
+                </td>
+                <td>
+                    <div>
+                        <input id="columns" type="text">
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <button id="buttonSet">Set</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>allowDragandDrop </div>
+                </td>
+                <td>
+                    <div>
+                        <input type="checkbox" tabindex="1" id='allowRowDragAndDrop' />
+                    </div>
+                </td>
+                <td>
+                    <div>allowFiltering </div>
+                </td>
+                <td>
+                    <div>
+                        <input type="checkbox" tabindex="1" id='allowFiltering' />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    <div style="padding-top: 7px">Selection Type</div>
+                </td>
+                <td style="padding-right: 10px">
+                    <div id='typeddl'>
+                        <input type="text" tabindex="1" id='type' />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    <div>
+                        Selection Mode
+                    </div>
+                </td>
+                <td>
+                    <div style="padding-right: 10px;padding-bottom: 10px">
+                        <input type="text" tabindex="1" id='mode' />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Enable Column Selection</div>
+                </td>
+                <td style="padding:10px 10px 10px 0px">
+                        <div>
+                            <input type="checkbox" tabindex="1" id='columnSelection'/>
+                        </div>
+                </td>
+
+                <td>
+                    <div>Enable Context Menu</div>
+                </td>
+                <td style="padding:10px 10px 10px 0px">
+                        <div>
+                            <input type="checkbox" tabindex="1" id='contextmenu'/>
+                        </div>
+                </td>
+
+                
+                <td>
+                    <div>Lazyload Grouping Enable</div>
+                </td>
+                <td style="padding:10px 10px 10px 0px">
+                        <div>
+                            <input type="checkbox" tabindex="1" id='lazyload'/>
+                        </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <div>Rtl Enable </div>
+                </td>
+                <td>
+                    <div>
+                        <input type="checkbox" tabindex="1" id='rtl' />
+                    </div>
+                </td>
+
+      
+                <td>
+                    <div style="padding-top: 7px">Add New Row Position</div>
+                </td>
+                <td >
+                    <div id='typeddl'>
+                            <input type="text" tabindex="1" id='newRowPosition' />
+                    </div>
+                </td>
+
+                <td>
+                    <div>Row Height</div>
+                </td>
+                <td>
+                    <div>
+                        <div style="padding-right: 10px;padding-bottom: 10px">
+                            <input type="text" tabindex="1" id='rowheight' />
+                        </div>
+                    </div>
+                </td>
+
+
+                       
+            </tr>
+        </tbody></table>
+    </div>
+    <div id="Grid"></div>
+
+    <script>
+
+    var virtualData = [];
+    var names = ['hardire', 'abramjo01', 'aubucch01', 'Hook', 'Rumpelstiltskin', 'Belle', 'Emma', 'Regina', 'Aurora', 'Elsa', 'Anna', 'Snow White', 'Prince Charming', 'Cora', 'Zelena', 'August', 'Mulan', 'Graham', 'Discord', 'Will', 'Robin Hood', 'Jiminy Cricket', 'Henry', 'Neal', 'Red', 'Aaran', 'Aaren', 'Aarez', 'Aarman', 'Aaron', 'Aaron-James', 'Aarron', 'Aaryan', 'Aaryn', 'Aayan', 'Aazaan', 'Abaan', 'Abbas', 'Abdallah', 'Abdalroof', 'Abdihakim', 'Abdirahman', 'Abdisalam', 'Abdul', 'Abdul-Aziz', 'Abdulbasir', 'Abdulkadir', 'Abdulkarem', 'Abdulkhader', 'Abdullah', 'Abdul-Majeed', 'Abdulmalik', 'Abdul-Rehman', 'Abdur', 'Abdurraheem', 'Abdur-Rahman', 'Abdur-Rehmaan', 'Abel', 'Abhinav', 'Abhisumant', 'Abid', 'Abir', 'Abraham', 'Abu', 'Abubakar', 'Ace', 'Adain', 'Adam', 'Adam-James', 'Addison', 'Addisson', 'Adegbola', 'Adegbolahan', 'Aden', 'Adenn', 'Adie', 'Adil', 'Aditya', 'Adnan', 'Adrian', 'Adrien', 'Aedan', 'Aedin', 'Aedyn', 'Aeron', 'Afonso', 'Ahmad', 'Ahmed', 'Ahmed-Aziz', 'Ahoua', 'Ahtasham', 'Aiadan', 'Aidan', 'Aiden', 'Aiden-Jack', 'Aiden-Vee'];
+
+    function dataSource() {
+        for (var i = 0; i < 10000; i++) {
+            virtualData.push({
+                'SNo': i + 1,
+                'FIELD1': names[Math.floor(Math.random() * names.length)],
+                'FIELD2': 1967 + (i % 10), 'FIELD3': Math.floor(Math.random() * 200),
+                'FIELD4': Math.floor(Math.random() * 100), 'FIELD5': Math.floor(Math.random() * 2000), 'FIELD6': Math.floor(Math.random() * 1000), 'FIELD7': Math.floor(Math.random() * 100), 'FIELD8': Math.floor(Math.random() * 10), 'FIELD9': Math.floor(Math.random() * 10), 'FIELD10': Math.floor(Math.random() * 100), 'FIELD11': Math.floor(Math.random() * 100), 'FIELD12': Math.floor(Math.random() * 1000), 'FIELD13': Math.floor(Math.random() * 10), 'FIELD14': Math.floor(Math.random() * 10), 'FIELD15': Math.floor(Math.random() * 1000), 'FIELD16': Math.floor(Math.random() * 200), 'FIELD17': Math.floor(Math.random() * 300), 'FIELD18': Math.floor(Math.random() * 400), 'FIELD19': Math.floor(Math.random() * 500), 'FIELD20': Math.floor(Math.random() * 700), 'FIELD21': Math.floor(Math.random() * 800), 'FIELD22': Math.floor(Math.random() * 1000), 'FIELD23': Math.floor(Math.random() * 2000), 'FIELD24': Math.floor(Math.random() * 150), 'FIELD25': Math.floor(Math.random() * 1000), 'FIELD26': Math.floor(Math.random() * 100), 'FIELD27': Math.floor(Math.random() * 400), 'FIELD28': Math.floor(Math.random() * 600), 'FIELD29': Math.floor(Math.random() * 500), 'FIELD30': Math.floor(Math.random() * 300),
+            });
+        }
+    }
+    dataSource();
+         var type = [
+            { id: 'Single', type: 'Single' },
+            { id: 'Multiple', type: 'Multiple' }
+        ];
+        var mode = [
+            { id: 'Row', mode: 'Row' },
+            { id: 'Cell', mode: 'Cell' },
+            { id: 'Both', mode: 'Both' }
+        ];
+
+
+        var grid = new ej.grids.Grid({
+            dataSource: virtualData,
+            height: 400,
+            width: 1000,
+            allowGrouping: true,
+            enableVirtualization: true,
+            allowSelection: true,
+            allowExcelExport: true,
+            allowPdfExport: true,
+            selectionSettings: { type: 'Multiple' },
+            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', showAddNewRow: true, newRowPosition: 'Top' },
+            toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel', 'Search', 'ColumnChooser', 'ExcelExport', 'PdfExport', 'CsvExport'],
+            allowSorting: true,
+            showColumnChooser: true,
+            allowReordering: true,
+            allowResizing: true,
+            toolbarClick: function (args) {
+                if (args.item.id === 'Grid_pdfexport') {
+                    grid.pdfExport();
+                }
+                if (args.item.id === 'Grid_excelexport') {
+                    grid.excelExport();
+                }
+                if (args.item.id === 'Grid_csvexport') {
+                    grid.csvExport();
+                }
+            },
+            rowSelected: function (args) {
+                console.log(args);
+            },
+            rowSelecting: function (args) {
+                console.log(args);
+            },
+            rowSelecting: selectingEvent,
+            cellSelecting : selectingEvent,
+            columns: [
+            { field: 'SNo', headerText: 'S.No', width: 120, isPrimaryKey: true, validationRules: { required: true } },
+                { field: 'FIELD1', headerText: 'Player Name', width: 140, minWidth: 50, maxWidth: 300, editType: 'dropdownedit', validationRules: { required: true } },
+                { field: 'FIELD2', headerText: 'Year', width: 120,  textAlign: 'Right' ,validationRules: {
+                        required: true, min: [function (args) {
+                            return args.value > 1900
+                        }, 'value should be greater than 100']
+                    }},
+                { field: 'FIELD3', headerText: 'Stint', width: 120, textAlign: 'Right'},
+                { field: 'FIELD4', headerText: 'TMID',allowEditing: false, width: 120, textAlign: 'Right' },
+                { field: 'FIELD5', headerText: 'LGID', width: 120, visible: false, textAlign: 'Right' },
+                { field: 'FIELD6', headerText: 'GP', width: 120, textAlign: 'Right',edit: {
+                        create: function () {
+                            element = document.createElement('input');
+                            return element;
+                        },
+                        read: function () {
+                            return dropdownobj.value;
+                        },
+                        destroy: function () {
+                            dropdownobj.destroy();
+                        },
+                        write: function (args) {
+                            dropdownobj = new ej.dropdowns.DropDownList({
+                                dataSource: virtualData,
+                                value: args.rowData[args.column.field],
+                                query: new ej.data.Query().select(['FIELD6']).take(10),
+                                fields: { text: 'FIELD6', value: 'FIELD6' },
+                                placeholder: 'Select a City',
+                                headerTemplate: '<table><tr><th>FIELD6</th></tr></table>',
+                                itemTemplate: '<div class="e-grid"><table class="e-table"><tbody><tr><td class="e-rowcell">${FIELD6}</td></tr> </tbody></table></div>'
+                            });
+                            dropdownobj.appendTo(element);
+                        }
+                    } 
+                },
+                { field: 'FIELD28', headerText: 'PostoRebounds', width: 130, visible: false, textAlign: 'Right' },
+                { field: 'FIELD29', headerText: 'PostdRebounds', width: 130, textAlign: 'Right' },
+                { field: 'FIELD30', headerText: 'PostRebounds', width: 150, textAlign: 'Right', editType: 'numericedit', validationRules: { required: true } },
+                {
+                    headerText: 'Commands', width: 120, commands: [{ type: 'Edit', buttonOption: { cssClass: 'e-flat', iconCss: 'e-edit e-icons' } },
+                    { type: 'Delete', buttonOption: { cssClass: 'e-flat', iconCss: 'e-delete e-icons' } },
+                    { type: 'Save', buttonOption: { cssClass: 'e-flat', iconCss: 'e-update e-icons' } },
+                    { type: 'Cancel', buttonOption: { cssClass: 'e-flat', iconCss: 'e-cancel-icon e-icons' } }]
+                }
+            ],
+            aggregates: [{
+                columns: [{
+                    type: 'Sum',
+                    field: 'Freight',
+                    groupFooterTemplate: 'Total units: ${Sum}'
+                },
+                {
+                    type: 'Max',
+                    field: 'Freight',
+                    groupCaptionTemplate: 'Maximum: ${Max}'
+                },
+                {
+                    type: 'Sum',
+                    field: 'Freight',
+                    format: 'C2',
+                    footerTemplate: 'Sum: ${Sum}'
+                }]
+            }],
+        });
+        grid.appendTo('#Grid');
+
+        var columns = new ej.inputs.NumericTextBox({
+                min: 0,
+                max: 8,
+                validateDecimalOnType: true,
+                decimals: 0,
+                format: 'n',
+                value: 0
+        });
+        columns.appendTo('#columns');
+
+        var rows = new ej.inputs.NumericTextBox({
+            min: 0,
+            max: 5,
+            validateDecimalOnType: true,
+            decimals: 0,
+            format: 'n',
+            value: 0
+        });
+        rows.appendTo('#rows');
+
+        var buttonSet = new ej.buttons.Button();
+        buttonSet.appendTo('#buttonSet');
+        if (ej.base.Browser.isDevice) {
+            columns.max = 1;
+            rows.max = 5;
+        }
+
+        document.getElementById('buttonSet').onclick = function () {
+            grid.frozenColumns = columns.value;
+            grid.frozenRows = rows.value;
+        };
+
+        var allowRowDragAndDrop = new ej.buttons.CheckBox();
+        allowRowDragAndDrop.appendTo('#allowRowDragAndDrop');
+
+        document.getElementById('allowRowDragAndDrop').onclick = function () {
+            if (allowRowDragAndDrop.checked) {
+                grid.allowRowDragAndDrop = true;
+            } else {
+                 grid.allowRowDragAndDrop = false;
+            }
+            grid.refresh();
+        };
+
+        var allowFiltering = new ej.buttons.CheckBox();
+        allowFiltering.appendTo('#allowFiltering');
+
+        document.getElementById('allowFiltering').onclick = function () {
+            if (allowFiltering.checked) {
+                grid.allowFiltering = true;
+            } else {
+                 grid.allowFiltering = false;
+            }
+        };
+
+
+        
+        var rtlEnable = new ej.buttons.CheckBox();
+        rtlEnable.appendTo('#rtl');
+
+        document.getElementById('rtl').onclick = function () {
+            if (rtlEnable.checked) {
+                grid.enableRtl = true;
+            } else {
+                grid.enableRtl = false;
+            }
+        };
+
+        var newRowPosition = [
+        { id: 'Top', newRowPosition: 'Top' },
+        { id: 'Bottom', newRowPosition: 'Bottom' }
+    ];
+
+        var dropDownType = new ej.dropdowns.DropDownList({
+                dataSource: newRowPosition,
+                fields: { text: 'newRowPosition', value: 'id' },
+                value: 'Top',
+                change: function (e) {
+                    var newRowPosition = e.value;
+                    grid.editSettings.newRowPosition = newRowPosition;
+                    grid.refresh();
+                }
+            });
+    dropDownType.appendTo('#newRowPosition');
+        
+        function selectingEvent(e) {
+            if (grid.selectionSettings.allowColumnSelection) {
+                e.cancel = true;
+            }
+        }
+
+    //Render DropDownList component for selection type.
+     var dropDownType = new ej.dropdowns.DropDownList({
+        dataSource: type,
+        fields: { text: 'type', value: 'id' },
+        value: 'Multiple',
+        change: function (e) {
+            var type = e.value;
+            grid.selectionSettings.type = type;
+        }
+    });
+    dropDownType.appendTo('#type');
+
+   //Render DropDownList component for selection type.
+    var dropDownMode = new ej.dropdowns.DropDownList({
+        dataSource: mode,
+        fields: { text: 'mode', value: 'id' },
+        value: 'Row',
+        change: function (e) {
+            var mode = e.value;
+            grid.selectionSettings.mode = mode;
+            if (mode == 'Row') {
+                grid.selectionSettings.persistSelection = true;
+            } else {
+                grid.selectionSettings.persistSelection = false;
+            }
+        },
+    });
+    dropDownMode.appendTo('#mode');
+
+    // enable/disable Column Selection
+    var columnSelection = new ej.buttons.CheckBox({
+        change: function (e) {
+            grid.clearSelection();
+            if (e.checked) {
+                grid.selectionSettings.allowColumnSelection = true;
+                dropDownMode.enabled = false;
+            } else {
+                grid.selectionSettings.allowColumnSelection = false;
+                dropDownMode.enabled = true;
+            }
+        }
+    }); 
+    columnSelection.appendTo('#columnSelection');
+
+
+    // enable/disable Column Selection
+    var contextmenu = new ej.buttons.CheckBox({
+        change: function (e) {
+            grid.clearSelection();
+            if (e.checked) {
+                grid.contextMenuItems = ['AutoFit', 'AutoFitAll', 'SortAscending', 'SortDescending',
+                'Copy', 'Edit', 'Delete', 'Save', 'Cancel',
+                'PdfExport', 'ExcelExport', 'CsvExport', 'FirstPage', 'PrevPage',
+                'LastPage', 'NextPage'];
+            } else {
+                grid.contextMenuItems = null;
+            }
+        }
+    }); 
+    contextmenu.appendTo('#contextmenu');
+
+    var lazyload = new ej.buttons.CheckBox({
+            change: function (e) {
+                if (!(grid.dataSource && grid.dataSource.result)) {
+                    if (grid.groupSettings.columns.length) {
+                        grid.clearGrouping();
+                    }
+                    grid.setProperties({
+                        filterSettings: {
+                            columns: []
+                        },
+                        groupSettings: { columns: [], enableLazyLoading: e.checked },
+                        sortSettings: { columns: [] }
+                    }, true);
+                    grid.freezeRefresh();
+                }
+            }
+        });
+        lazyload.appendTo('#lazyload');
+
+        var rowheight = new ej.dropdowns.DropDownList({
+            dataSource: [25, 37, 50],
+            change: function (e) {
+                grid.rowHeight = e.value;
+            }
+        });
+        rowheight.appendTo('#rowheight');
+
+    
+       
+    </script>
+</body>
+
+</html>
