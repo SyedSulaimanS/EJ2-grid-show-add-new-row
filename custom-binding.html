@@ -200,8 +200,8 @@
                 {
                     field: 'Freight', width: 120, format: 'C', format: 'C2', minWidth: 50, maxWidth: 300, validationRules: {
                         required: true, min: [function (args) {
-                            return args.value > 100
-                        }, 'value should be greater than 100']
+                            return args.value > 10
+                        }, 'value should be greater than 10']
                     }, textAlign: 'Right'
                 },
                 { field: 'ShipName', headerText: 'Ship Name', defaultValue: 'Hanari Carnes', allowEditing: false, width: '170' },
