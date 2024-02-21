@@ -148,7 +148,7 @@
                 { field: 'EmployeeID', headerText: 'Employee ID', isPrimaryKey: true, width: 120, validationRules: { required: true, number: true }, textAlign: 'Right' },
                 { field: 'Employees', headerText: 'Employees', minWidth: 50, maxWidth: 300, validationRules: { required: true }, width: 160 },
                 {
-                    field: 'CurrentSalary', width: 120, format: 'C2', minWidth: 50, maxWidth: 300, validationRules: {
+                    field: 'CurrentSalary', width: 120, format: 'C2', minWidth: 50, editType: 'numericedit', maxWidth: 300, validationRules: {
                         required: true, min: [function (args) {
                             return args.value > 0
                         }, 'value should be greater than 0']

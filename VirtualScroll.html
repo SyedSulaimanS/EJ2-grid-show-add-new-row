@@ -147,7 +147,7 @@
                 { field: 'OrderID', headerText: 'Order ID', isPrimaryKey: true, width: 120, validationRules: { required: true, number: true }, textAlign: 'Right' },
                 { field: 'CustomerID', headerText: 'Customer Name', minWidth: 50, maxWidth: 300, validationRules: { required: true }, width: 160 },
                 {
-                    field: 'Freight', width: 140, format: 'C2', minWidth: 50, maxWidth: 300, validationRules: {
+                    field: 'Freight', width: 140, format: 'C2', minWidth: 50, maxWidth: 300, editType: 'numericedit', validationRules: {
                         required: true, min: [function (args) {
                             return args.value > 0
                         }, 'value should be greater than 0']
