@@ -57,38 +57,6 @@
                 </tr>
                 <tr>
                     <td>
-                        <div style="padding-top: 7px">Selection Type</div>
-                    </td>
-                    <td style="padding-right: 10px">
-                        <div id='typeddl'>
-                            <input type="text" tabindex="1" id='type' />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            Selection Mode
-                        </div>
-                    </td>
-                    <td>
-                        <div style="padding-right: 10px;padding-bottom: 10px">
-                            <input type="text" tabindex="1" id='mode' />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>Enable Column Selection</div>
-                    </td>
-                    <td style="padding:10px 10px 10px 0px">
-                        <div>
-                            <input type="checkbox" tabindex="1" id='columnSelection' />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <div>Enable RTL </div>
                     </td>
                     <td>
@@ -133,16 +101,6 @@
                 </tr>
                 <tr>
                     <td>
-                        <div>lazyload</div>
-                    </td>
-                    <td>
-                        <div>
-                            <input type="checkbox" tabindex="1" id='lazyload' />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <div>Context menu</div>
                     </td>
                     <td>
@@ -157,30 +115,19 @@
     <div id="Grid"></div>
 
     <script>
-        var type = [
-            { id: 'Single', type: 'Single' },
-            { id: 'Multiple', type: 'Multiple' }
-        ];
-        var mode = [
-            { id: 'Row', mode: 'Row' },
-            { id: 'Cell', mode: 'Cell' },
-            { id: 'Both', mode: 'Both' }
-        ];
-        var lazyLoadData = data;
-        var dropdownobj;
 
+        var lazyLoadData = data;        
+        var dropdownobj;
         var grid = new ej.grids.Grid({
             // dataSource: data,
             height: 410,
             width: 1200,
-            allowGrouping: true,
+            allowGrouping: false,
             allowSelection: true,
             allowPaging: true,
-            allowExcelExport: true,
-            allowPdfExport: true,
             selectionSettings: { type: 'Multiple' },
             editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', newRowPosition: 'Top' },
-            toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel', 'Search', 'ColumnChooser', 'ExcelExport', 'PdfExport', 'CsvExport', 'Print'],
+            toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel', 'Search', 'ColumnChooser', 'Print'],
             allowSorting: true,
             showColumnChooser: true,
             allowReordering: true,
@@ -192,8 +139,6 @@
             rowSelecting: function (args) {
                 console.log(args);
             },
-            rowSelecting: selectingEvent,
-            cellSelecting: selectingEvent,
             columns: [
                 { field: 'OrderID', headerText: 'Order ID', isPrimaryKey: true, width: 120, validationRules: { required: true, number: true }, textAlign: 'Right' },
                 { field: 'CustomerID', headerText: 'Customer Name', minWidth: 50, maxWidth: 300, validationRules: { required: true }, width: 160 },
@@ -437,56 +382,6 @@
             grid.enableRtl = rtl.checked;
         };
 
-        function selectingEvent(e) {
-            if (grid.selectionSettings.allowColumnSelection) {
-                e.cancel = true;
-            }
-        }
-
-        //Render DropDownList component for selection type.
-        var dropDownType = new ej.dropdowns.DropDownList({
-            dataSource: type,
-            fields: { text: 'type', value: 'id' },
-            value: 'Multiple',
-            change: function (e) {
-                var type = e.value;
-                grid.selectionSettings.type = type;
-            }
-        });
-        dropDownType.appendTo('#type');
-
-        //Render DropDownList component for selection type.
-        var dropDownMode = new ej.dropdowns.DropDownList({
-            dataSource: mode,
-            fields: { text: 'mode', value: 'id' },
-            value: 'Row',
-            change: function (e) {
-                var mode = e.value;
-                grid.selectionSettings.mode = mode;
-                if (mode == 'Row') {
-                    grid.selectionSettings.persistSelection = true;
-                } else {
-                    grid.selectionSettings.persistSelection = false;
-                }
-            },
-        });
-        dropDownMode.appendTo('#mode');
-
-        // enable/disable Column Selection
-        var columnSelection = new ej.buttons.CheckBox({
-            change: function (e) {
-                grid.clearSelection();
-                if (e.checked) {
-                    grid.selectionSettings.allowColumnSelection = true;
-                    dropDownMode.enabled = false;
-                } else {
-                    grid.selectionSettings.allowColumnSelection = false;
-                    dropDownMode.enabled = true;
-                }
-            }
-        });
-        columnSelection.appendTo('#columnSelection');
-
         var emptydata = new ej.buttons.CheckBox({
             change: function (e) {
                 if (e.checked) {
@@ -515,24 +410,6 @@
         });
         newrowposition.appendTo('#newrowposition');
 
-        var lazyload = new ej.buttons.CheckBox({
-            change: function (e) {
-                // if (!(grid.dataSource && grid.dataSource.result)) {
-                if (grid.groupSettings.columns.length) {
-                    grid.clearGrouping();
-                }
-                grid.setProperties({
-                    filterSettings: {
-                        columns: []
-                    },
-                    groupSettings: { columns: [], enableLazyLoading: e.checked },
-                    sortSettings: { columns: [] }
-                }, true);
-                grid.freezeRefresh();
-                // }
-            }
-        });
-        lazyload.appendTo('#lazyload');
 
         var contextmenu = new ej.buttons.CheckBox({
             change: function (e) {

@@ -63,37 +63,10 @@
                     </div>
                 </td>
             </tr>
+
+           
             <tr>
-                <td >
-                    <div style="padding-top: 7px">Selection Type</div>
-                </td>
-                <td style="padding-right: 10px">
-                    <div id='typeddl'>
-                        <input type="text" tabindex="1" id='type' />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td >
-                    <div>
-                        Selection Mode
-                    </div>
-                </td>
-                <td>
-                    <div style="padding-right: 10px;padding-bottom: 10px">
-                        <input type="text" tabindex="1" id='mode' />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>Enable Column Selection</div>
-                </td>
-                <td style="padding:10px 10px 10px 0px">
-                        <div>
-                            <input type="checkbox" tabindex="1" id='columnSelection'/>
-                        </div>
-                </td>
+
 
                 <td>
                     <div>Enable Context Menu</div>
@@ -104,15 +77,6 @@
                         </div>
                 </td>
 
-                
-                <td>
-                    <div>Lazyload Grouping Enable</div>
-                </td>
-                <td style="padding:10px 10px 10px 0px">
-                        <div>
-                            <input type="checkbox" tabindex="1" id='lazyload'/>
-                        </div>
-                </td>
 
             </tr>
             <tr>
@@ -154,16 +118,8 @@
     <div id="Grid"></div>
 
     <script>
-         var type = [
-            { id: 'Single', type: 'Single' },
-            { id: 'Multiple', type: 'Multiple' }
-        ];
-        var mode = [
-            { id: 'Row', mode: 'Row' },
-            { id: 'Cell', mode: 'Cell' },
-            { id: 'Both', mode: 'Both' }
-        ];
-
+    
+    var dropdownobj;
         let defaultData = new ej.data.DataManager({
             url: 'https://ej2services.syncfusion.com/js/development/api/UrlDataSource',
             adaptor: new ej.data.UrlAdaptor(),
@@ -175,34 +131,19 @@
             allowGrouping: true,
             allowSelection: true,
             allowPaging: true,
-            allowExcelExport: true,
-            allowPdfExport: true,
             selectionSettings: { type: 'Multiple' },
             editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', showAddNewRow: true, newRowPosition: 'Top' },
-            toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel', 'Search', 'ColumnChooser', 'ExcelExport', 'PdfExport', 'CsvExport'],
+            toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel', 'Search', 'ColumnChooser'],
             allowSorting: true,
             showColumnChooser: true,
             allowReordering: true,
             allowResizing: true,
-            toolbarClick: function (args) {
-                if (args.item.id === 'Grid_pdfexport') {
-                    grid.pdfExport();
-                }
-                if (args.item.id === 'Grid_excelexport') {
-                    grid.excelExport();
-                }
-                if (args.item.id === 'Grid_csvexport') {
-                    grid.csvExport();
-                }
-            },
             rowSelected: function (args) {
                 console.log(args);
             },
             rowSelecting: function (args) {
                 console.log(args);
             },
-            rowSelecting: selectingEvent,
-            cellSelecting : selectingEvent,
             columns: [
                 { field: 'EmployeeID', headerText: 'Employee ID', isPrimaryKey: true, width: 120, validationRules: { required: true, number: true }, textAlign: 'Right' },
                 { field: 'Employees', headerText: 'Employees', minWidth: 50, maxWidth: 300, validationRules: { required: true }, width: 160 },
@@ -367,55 +308,6 @@
             });
     dropDownType.appendTo('#newRowPosition');
         
-        function selectingEvent(e) {
-            if (grid.selectionSettings.allowColumnSelection) {
-                e.cancel = true;
-            }
-        }
-
-    //Render DropDownList component for selection type.
-     var dropDownType = new ej.dropdowns.DropDownList({
-        dataSource: type,
-        fields: { text: 'type', value: 'id' },
-        value: 'Multiple',
-        change: function (e) {
-            var type = e.value;
-            grid.selectionSettings.type = type;
-        }
-    });
-    dropDownType.appendTo('#type');
-
-   //Render DropDownList component for selection type.
-    var dropDownMode = new ej.dropdowns.DropDownList({
-        dataSource: mode,
-        fields: { text: 'mode', value: 'id' },
-        value: 'Row',
-        change: function (e) {
-            var mode = e.value;
-            grid.selectionSettings.mode = mode;
-            if (mode == 'Row') {
-                grid.selectionSettings.persistSelection = true;
-            } else {
-                grid.selectionSettings.persistSelection = false;
-            }
-        },
-    });
-    dropDownMode.appendTo('#mode');
-
-    // enable/disable Column Selection
-    var columnSelection = new ej.buttons.CheckBox({
-        change: function (e) {
-            grid.clearSelection();
-            if (e.checked) {
-                grid.selectionSettings.allowColumnSelection = true;
-                dropDownMode.enabled = false;
-            } else {
-                grid.selectionSettings.allowColumnSelection = false;
-                dropDownMode.enabled = true;
-            }
-        }
-    }); 
-    columnSelection.appendTo('#columnSelection');
 
 
     // enable/disable Column Selection
@@ -433,25 +325,6 @@
         }
     }); 
     contextmenu.appendTo('#contextmenu');
-
-    var lazyload = new ej.buttons.CheckBox({
-            change: function (e) {
-                if (!(grid.dataSource && grid.dataSource.result)) {
-                    if (grid.groupSettings.columns.length) {
-                        grid.clearGrouping();
-                    }
-                    grid.setProperties({
-                        filterSettings: {
-                            columns: []
-                        },
-                        groupSettings: { columns: [], enableLazyLoading: e.checked },
-                        sortSettings: { columns: [] }
-                    }, true);
-                    grid.freezeRefresh();
-                }
-            }
-        });
-        lazyload.appendTo('#lazyload');
 
         var rowheight = new ej.dropdowns.DropDownList({
             dataSource: [25, 37, 50],
