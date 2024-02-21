@@ -155,10 +155,10 @@
                 { field: 'OrderID', headerText: 'Order ID', isPrimaryKey: true, width: 120, validationRules: { required: true, number: true }, textAlign: 'Right' },
                 { field: 'CustomerID', headerText: 'Customer Name', minWidth: 50, maxWidth: 300, validationRules: { required: true }, width: 160 },
                 {
-                    field: 'Freight', width: 120, format: 'C', format: 'C2', editType: 'numericedit', minWidth: 50, maxWidth: 300, validationRules: {
+                    field: 'Freight', width: 120, format: 'C2', editType: 'numericedit', minWidth: 50, maxWidth: 300, validationRules: {
                         required: true, min: [function (args) {
-                            return args.value > 10
-                        }, 'value should be greater than 10']
+                            return args.value > 0
+                        }, 'value should be greater than 0']
                     }, textAlign: 'Right'
                 },
                 { field: 'ShipName', headerText: 'Ship Name', defaultValue: 'Hanari Carnes', allowEditing: false, width: '170' },
