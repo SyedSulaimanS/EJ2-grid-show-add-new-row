@@ -62,6 +62,14 @@
                         <input type="checkbox" tabindex="1" id='allowFiltering' />
                     </div>
                 </td>
+                <td>
+                    <div>showAddNewRow </div>
+                </td>
+                <td>
+                    <div>
+                        <input type="checkbox" tabindex="1" id='showAddNewRow' />
+                    </div>
+                </td>
             </tr>
 
 
@@ -274,6 +282,17 @@
                 grid.allowFiltering = true;
             } else {
                  grid.allowFiltering = false;
+            }
+        };
+        
+        var showAddNewRow = new ej.buttons.CheckBox();
+        showAddNewRow.appendTo('#showAddNewRow');
+
+        document.getElementById('showAddNewRow').onclick = function () {
+            if (showAddNewRow.checked) {
+                grid.editSettings.showAddNewRow = true;
+            } else {
+                grid.editSettings.showAddNewRow = false;
             }
         };
 

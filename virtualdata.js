@@ -10942,7 +10942,7 @@ function generateHierarchyData() {
     "3508",
   ];
 
-  for (let i = 0; i < 100000; i++) {
+  for (let i = 0; i < 10000; i++) {
     hierarchyOrderdata.push({
       OrderID: 10248 + i,
       CustomerID: names[i % names.length],
